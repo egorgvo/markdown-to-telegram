@@ -1,5 +1,5 @@
 {
-  "name": "telegram-markdown-v2",
+  "name": "markdown-to-telegram",
   "version": "0.0.4",
   "description": "Convert markdown into Telegram Markdown V2 format with TypeScript support",
   "main": "./dist/index.js",
@@ -32,16 +32,16 @@
     "remark",
     "unified"
   ],
-  "author": "Claude Code",
+  "author": "egorgvo",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andyrightnow/telegram-markdown-v2.git"
+    "url": "git+https://github.com/egorgvo/markdown-to-telegram.git"
   },
   "bugs": {
-    "url": "https://github.com/andyrightnow/telegram-markdown-v2/issues"
+    "url": "https://github.com/egorgvo/markdown-to-telegram/issues"
   },
-  "homepage": "https://github.com/andyrightnow/telegram-markdown-v2#readme",
+  "homepage": "https://github.com/egorgvo/markdown-to-telegram#readme",
   "engines": {
     "node": ">=18.0.0",
     "bun": ">=1.2.20"

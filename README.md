@@ -1,4 +1,6 @@
-# telegram-markdown-v2
+# markdown-to-telegram
+
+> Fork of [telegram-markdown-v2](https://github.com/AndyRightNow/telegram-markdown-v2)
 
 A lightweight TypeScript library for seamlessly transforming standard Markdown into Telegram's MarkdownV2 format. Built for developers who want reliable Markdown-to-Telegram conversion without the hassle.
 
@@ -9,18 +11,18 @@ Working with Telegram's MarkdownV2 format can be frustrating - special character
 ## Installation
 
 ```bash
-bun install telegram-markdown-v2
+npm install markdown-to-telegram
 ```
 
-Or with npm:
+Or with bun:
 ```bash
-npm install telegram-markdown-v2
+bun install markdown-to-telegram
 ```
 
 ## Quick Start
 
 ```typescript
-import { convert } from 'telegram-markdown-v2';
+import { convert } from 'markdown-to-telegram';
 
 const markdown = `
 # Hello World
@@ -69,14 +71,14 @@ type UnsupportedTagsStrategy = 'escape' | 'remove' | 'keep';
 
 **Strategy Options:**
 - `'keep'` (default): Preserve unsupported elements as-is
-- `'escape'`: Escape special characters in unsupported elements  
+- `'escape'`: Escape special characters in unsupported elements
 - `'remove'`: Remove unsupported elements entirely
 
 ## Examples
 
 ### Basic Formatting
 ```typescript
-import { convert } from 'telegram-markdown-v2';
+import { convert } from 'markdown-to-telegram';
 
 const input = "Check out this **amazing** library with *great* features!";
 const output = convert(input);
@@ -103,10 +105,10 @@ const formatted = convert(codeExample);
 const listExample = `
 ## Todo List
 - Create awesome library
-- Write documentation  
+- Write documentation
 - Publish to npm
 
-Visit [our repo](https://github.com/example/telegram-markdown-v2)
+Visit [our repo](https://github.com/egorgvo/markdown-to-telegram)
 `;
 
 const telegramReady = convert(listExample);
@@ -116,7 +118,7 @@ const telegramReady = convert(listExample);
 
 ### Unsupported Tags Strategy
 ```typescript
-import { convert } from 'telegram-markdown-v2';
+import { convert } from 'markdown-to-telegram';
 
 // Keep unsupported tags as-is (default)
 const keepResult = convert('> This is a blockquote', 'keep');
@@ -193,4 +195,6 @@ MIT © 2025
 
 ## Acknowledgments
 
-Inspired by the Python `telegramify-markdown` library, reimagined for the TypeScript ecosystem with modern tooling and better performance.
+This is a fork of [telegram-markdown-v2](https://github.com/AndyRightNow/telegram-markdown-v2) by [AndyRightNow](https://github.com/AndyRightNow).
+
+Originally inspired by the Python `telegramify-markdown` library, reimagined for the TypeScript ecosystem with modern tooling and better performance.
