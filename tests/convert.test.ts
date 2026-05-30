@@ -402,3 +402,21 @@ test('Complex nesting with all V2 features', () => {
   const tgMarkdown = '_*__||nested||__*_\n';
   expect(convert(markdown)).toBe(tgMarkdown);
 });
+
+test('Thematic break with ---', () => {
+  const markdown = 'before\n\n---\n\nafter';
+  const tgMarkdown = 'before\n\n───\n\nafter\n';
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
+
+test('Thematic break with *****', () => {
+  const markdown = 'before\n\n*****\n\nafter';
+  const tgMarkdown = 'before\n\n─────\n\nafter\n';
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
+
+test('Thematic break with ___', () => {
+  const markdown = 'before\n\n___\n\nafter';
+  const tgMarkdown = 'before\n\n───\n\nafter\n';
+  expect(convert(markdown)).toBe(tgMarkdown);
+});

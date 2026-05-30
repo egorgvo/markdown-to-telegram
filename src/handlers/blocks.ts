@@ -1,4 +1,4 @@
-import type { Blockquote, HTML, List, ListItem, Parents, Table } from 'mdast';
+import type { Blockquote, HTML, List, ListItem, Parents, Table, ThematicBreak } from 'mdast';
 import type { Info, State } from 'mdast-util-to-markdown';
 import { defaultHandlers } from 'mdast-util-to-markdown';
 import { toString } from 'mdast-util-to-string';
@@ -60,6 +60,14 @@ export function handleListItem(
   processed = processed.replace(/^(\s*)(\d+\\\.) /gm, '$1$2  '); // Double space for escaped
 
   return processed;
+}
+
+export function handleThematicBreak(node: ThematicBreak): string {
+  const length =
+    node.position
+      ? node.position.end.column - node.position.start.column
+      : 3;
+  return '\u2500'.repeat(length);
 }
 
 export function handleBlockquote(
