@@ -52,12 +52,12 @@ export function handleListItem(
   // Post-process to fix spacing issues
   let processed = result;
 
-  // Replace * with • for unordered lists and ensure exactly 3 spaces
-  processed = processed.replace(/^(\s*)\*\s*/gm, '$1•   ');
+  // Replace * with • for unordered lists
+  processed = processed.replace(/^(\s*)\*\s*/gm, '$1• ');
 
-  // Fix ordered list spacing: add extra space after dots
-  processed = processed.replace(/^(\s*)(\d+\.) /gm, '$1$2  '); // Double space for non-escaped
-  processed = processed.replace(/^(\s*)(\d+\\\.) /gm, '$1$2  '); // Double space for escaped
+  // Normalize ordered list spacing to single space after dot
+  processed = processed.replace(/^(\s*\d+\.)\s+/gm, '$1 ');
+  processed = processed.replace(/^(\s*\d+\\\.)\s+/gm, '$1 ');
 
   return processed;
 }
