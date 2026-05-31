@@ -292,6 +292,30 @@ test('Telegram V2: Special character escaping', () => {
   expect(convert(markdown)).toBe(tgMarkdown);
 });
 
+test('Blockquote preserves line breaks', () => {
+  const markdown = `> line one
+> line two
+>
+> line after break`;
+  const tgMarkdown = `>line one
+>line two
+>
+>line after break
+`;
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
+
+test('Blockquote with paragraphs preserves breaks', () => {
+  const markdown = `> first paragraph
+>
+> second paragraph`;
+  const tgMarkdown = `>first paragraph
+>
+>second paragraph
+`;
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
+
 // Tests for unsupported tags strategy
 test('Escape unsupported tags: blockquote', () => {
   const markdown = '> test';

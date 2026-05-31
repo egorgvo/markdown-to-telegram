@@ -80,10 +80,15 @@ export function handleBlockquote(
     info: Info
   ): string {
     const exit = state.enter('blockquote');
-    const content = renderChildren(node, state, info);
+    const parts: string[] = [];
+    for (const child of node.children) {
+      parts.push(state.handle(child, node, state, info));
+    }
+    const content = parts.join('\n\n');
     exit();
 
-    const lines = content.split('\n').filter((line) => line.trim());
+    // Remove trailing empty lines but preserve internal empty lines (paragraph breaks)
+    const lines = content.replace(/\n+$/, '').split('\n');
     const quotedLines = lines.map((line) => `>${line}`);
 
     return processUnsupportedTags(
