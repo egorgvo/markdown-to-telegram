@@ -61,7 +61,8 @@ export function convert(
   const definitions: DefinitionsRecord = {};
   const markdownOptions = createMarkdownOptions(
     definitions,
-    unsupportedTagsStrategy
+    unsupportedTagsStrategy,
+    markdown
   );
 
   // Pre-process V2 HTML tags BEFORE markdown processing

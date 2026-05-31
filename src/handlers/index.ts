@@ -12,14 +12,15 @@ import { handleCode, handleInlineCode, handleText } from './text.js';
  */
 function createHandlers(
   definitions: DefinitionsRecord,
-  unsupportedTagsStrategy: UnsupportedTagsStrategy
+  unsupportedTagsStrategy: UnsupportedTagsStrategy,
+  sourceMarkdown: string
 ): Partial<Handlers> {
   return {
     heading: handleHeading,
     strong: handleStrong,
     delete: handleDelete,
     emphasis: handleEmphasis,
-    list: handleList,
+    list: handleList(sourceMarkdown),
     listItem: handleListItem,
     inlineCode: handleInlineCode,
     code: handleCode,
@@ -41,7 +42,8 @@ function createHandlers(
  */
 export function createMarkdownOptions(
   definitions: DefinitionsRecord,
-  unsupportedTagsStrategy: UnsupportedTagsStrategy = 'keep'
+  unsupportedTagsStrategy: UnsupportedTagsStrategy = 'keep',
+  sourceMarkdown: string = ''
 ): Options {
   return {
     bullet: '*',
@@ -49,6 +51,6 @@ export function createMarkdownOptions(
     bulletOther: '+',
     tightDefinitions: true,
     listItemIndent: 'one',
-    handlers: createHandlers(definitions, unsupportedTagsStrategy) as Handlers,
+    handlers: createHandlers(definitions, unsupportedTagsStrategy, sourceMarkdown) as Handlers,
   };
 }

@@ -7,38 +7,31 @@ import type { UnsupportedTagsStrategy } from '../types.js';
 import { processUnsupportedTags } from '../utils.js';
 import { renderChildren } from './utils.js';
 
-export function handleList(
-  node: List,
-  parent: Parents | undefined,
-  state: State,
-  info: Info
-): string {
-  const result = defaultHandlers.list(node, parent, state, info);
+function getNextSibling(node: List, parent: Parents | undefined) {
+  const children = parent && 'children' in parent && Array.isArray(parent.children)
+    ? parent.children
+    : [];
+  return children[children.indexOf(node) + 1];
+}
 
-  // Fix ordered list escaping and add extra spacing after lists if followed by code blocks
-  let processed = result.replace(/^(\d+)\./gm, '$1\\.');
+function getOriginalMarker(node: List, sourceMarkdown: string): string {
+  if (!node.ordered || node.position?.start.offset == null) return '.';
+  const markerOffset = node.position.start.offset + String(node.start ?? 1).length;
+  return sourceMarkdown[markerOffset] === ')' ? ')' : '.';
+}
 
-  // Check if this list is followed by a code block and add extra newline
-  const nextSibling =
-    parent &&
-    typeof parent === 'object' &&
-    'children' in parent &&
-    Array.isArray(parent.children)
-      ? parent.children[
-          parent.children.findIndex((child: unknown) => child === node) + 1
-        ]
-      : null;
-  if (
-    nextSibling &&
-    typeof nextSibling === 'object' &&
-    nextSibling &&
-    'type' in nextSibling &&
-    nextSibling.type === 'code'
-  ) {
-    processed += '\n';
-  }
+export function handleList(sourceMarkdown: string) {
+  return function (node: List, parent: Parents | undefined, state: State, info: Info): string {
+    const result = defaultHandlers.list(node, parent, state, info);
+    const marker = getOriginalMarker(node, sourceMarkdown);
+    let processed = result.replace(/^(\d+)\./gm, `$1\\${marker}`);
 
-  return processed;
+    if (getNextSibling(node, parent)?.type === 'code') {
+      processed += '\n';
+    }
+
+    return processed;
+  };
 }
 
 export function handleListItem(
@@ -52,12 +45,12 @@ export function handleListItem(
   // Post-process to fix spacing issues
   let processed = result;
 
-  // Replace * with • for unordered lists
-  processed = processed.replace(/^(\s*)\*\s*/gm, '$1• ');
+  // Replace *, +, - with • for unordered lists
+  processed = processed.replace(/^(\s*)(?:\*|\+|-)\s*/gm, '$1• ');
 
-  // Normalize ordered list spacing to single space after dot
-  processed = processed.replace(/^(\s*\d+\.)\s+/gm, '$1 ');
-  processed = processed.replace(/^(\s*\d+\\\.)\s+/gm, '$1 ');
+  // Normalize ordered list spacing to single space after marker
+  processed = processed.replace(/^(\s*\d+[.)])\s+/gm, '$1 ');
+  processed = processed.replace(/^(\s*\d+\\[.)])\s+/gm, '$1 ');
 
   return processed;
 }

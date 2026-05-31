@@ -53,9 +53,27 @@ test('Unordered list', () => {
   expect(convert(markdown)).toBe(tgMarkdown);
 });
 
+test('Unordered list with + marker', () => {
+  const markdown = '+ list\n+ list\n+ list';
+  const tgMarkdown = '• list\n• list\n• list\n';
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
+
+test('Unordered list with - marker', () => {
+  const markdown = '- list\n- list\n- list';
+  const tgMarkdown = '• list\n• list\n• list\n';
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
+
 test('Ordered list', () => {
   const markdown = '1. list\n2. list\n3. list';
   const tgMarkdown = '1\\. list\n2\\. list\n3\\. list\n';
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
+
+test('Ordered list with ) marker', () => {
+  const markdown = '1) list\n2) list\n3) list';
+  const tgMarkdown = '1\\) list\n2\\) list\n3\\) list\n';
   expect(convert(markdown)).toBe(tgMarkdown);
 });
 
