@@ -83,9 +83,8 @@ export function handleBlockquote(
     const content = renderChildren(node, state, info);
     exit();
 
-    // Convert to V2 block quote format: each line starts with > followed by space
     const lines = content.split('\n').filter((line) => line.trim());
-    const quotedLines = lines.map((line) => `> ${line}`);
+    const quotedLines = lines.map((line) => `>${line}`);
 
     return processUnsupportedTags(
       quotedLines.join('\n'),

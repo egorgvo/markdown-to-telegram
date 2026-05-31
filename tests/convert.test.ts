@@ -295,7 +295,7 @@ test('Telegram V2: Special character escaping', () => {
 // Tests for unsupported tags strategy
 test('Escape unsupported tags: blockquote', () => {
   const markdown = '> test';
-  const tgMarkdown = '\\> test\n';
+  const tgMarkdown = '\\>test\n';
   expect(convert(markdown, 'escape')).toBe(tgMarkdown);
 });
 
@@ -386,7 +386,7 @@ test('Multiple V2 features combined', () => {
   const tgMarkdown = `*Bold* _italic_ __underline__ ||spoiler||
 \`code\` and [user](tg://user\\?id\\=123)
 
-> Quote with [👍](tg://emoji\\?id\\=456)
+>Quote with [👍](tg://emoji\\?id\\=456)
 `;
   expect(convert(markdown)).toBe(tgMarkdown);
 });
