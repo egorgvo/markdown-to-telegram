@@ -77,6 +77,12 @@ test('Ordered list with ) marker', () => {
   expect(convert(markdown)).toBe(tgMarkdown);
 });
 
+test('Ordered list with mixed ) and . markers', () => {
+  const markdown = '1) list\n2) list\n3. list';
+  const tgMarkdown = '1\\) list\n2\\) list\n\n3\\. list\n';
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
+
 test('Link with title', () => {
   const markdown = '[](http://atlassian.com "Atlas+sian")';
   const tgMarkdown = '[Atlas\\+sian](http://atlassian.com)\n';

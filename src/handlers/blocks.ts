@@ -24,7 +24,7 @@ export function handleList(sourceMarkdown: string) {
   return function (node: List, parent: Parents | undefined, state: State, info: Info): string {
     const result = defaultHandlers.list(node, parent, state, info);
     const marker = getOriginalMarker(node, sourceMarkdown);
-    let processed = result.replace(/^(\d+)\./gm, `$1\\${marker}`);
+    let processed = result.replace(/^(\d+)[.)]/gm, `$1\\${marker}`);
 
     if (getNextSibling(node, parent)?.type === 'code') {
       processed += '\n';
