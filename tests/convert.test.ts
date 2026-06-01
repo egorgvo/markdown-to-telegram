@@ -65,6 +65,18 @@ test('Unordered list with - marker', () => {
   expect(convert(markdown)).toBe(tgMarkdown);
 });
 
+test('Unordered list with mixed markers', () => {
+  const markdown = '* list\n* list\n+ list';
+  const tgMarkdown = '• list\n• list\n• list\n';
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
+
+test('Unordered list with mixed markers separated by blank line', () => {
+  const markdown = '* list\n* list\n\n+ list\n+ list';
+  const tgMarkdown = '• list\n• list\n\n• list\n• list\n';
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
+
 test('Ordered list', () => {
   const markdown = '1. list\n2. list\n3. list';
   const tgMarkdown = '1\\. list\n2\\. list\n3\\. list\n';

@@ -1,4 +1,4 @@
-import type { Handlers, Options } from 'mdast-util-to-markdown';
+import type { Handlers, Join, Options } from 'mdast-util-to-markdown';
 
 import type { DefinitionsRecord, UnsupportedTagsStrategy } from '../types.js';
 import { handleBlockquote, handleHtml, handleList, handleListItem, handleTable, handleThematicBreak } from './blocks.js';
@@ -45,6 +45,21 @@ export function createMarkdownOptions(
   unsupportedTagsStrategy: UnsupportedTagsStrategy = 'keep',
   sourceMarkdown: string = ''
 ): Options {
+  const join: Join[] = [
+    (left, right) => {
+      if (left.type === 'list' && right.type === 'list' && !('ordered' in left && left.ordered) && !('ordered' in right && right.ordered)) {
+        const leftEnd = left.position?.end.offset;
+        const rightStart = right.position?.start.offset;
+        if (leftEnd != null && rightStart != null) {
+          const between = sourceMarkdown.slice(leftEnd, rightStart);
+          if (between.includes('\n\n')) return 1;
+        }
+        return 0;
+      }
+      return undefined as unknown as number;
+    },
+  ];
+
   return {
     bullet: '*',
     bulletOrdered: '.',
@@ -52,5 +67,6 @@ export function createMarkdownOptions(
     tightDefinitions: true,
     listItemIndent: 'one',
     handlers: createHandlers(definitions, unsupportedTagsStrategy, sourceMarkdown) as Handlers,
+    join,
   };
 }
