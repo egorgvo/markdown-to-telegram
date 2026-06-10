@@ -480,3 +480,32 @@ test('Thematic break with ___', () => {
   const tgMarkdown = 'before\n\n───\n\nafter\n';
   expect(convert(markdown)).toBe(tgMarkdown);
 });
+
+test('Mixed-level headings, blockquotes, and inline formatting', () => {
+  const markdown = `### Aristotle
+
+> Aristotle was a student of [Plato](https://example.com/plato) and tutored Alexander the Great for several years.
+
+> His work on _Poetics_ studies the nature of writing and poetry in great detail.
+# Legacy
+
+His ideas shaped Western thought for centuries.
+### Legacy
+
+His writings remain a cornerstone of Western philosophy.`;
+  const tgMarkdown = `*Aristotle*
+
+>Aristotle was a student of [Plato](https://example.com/plato) and tutored Alexander the Great for several years\\.
+
+>His work on _Poetics_ studies the nature of writing and poetry in great detail\\.
+
+*Legacy*
+
+His ideas shaped Western thought for centuries\\.
+
+*Legacy*
+
+His writings remain a cornerstone of Western philosophy\\.
+`;
+  expect(convert(markdown)).toBe(tgMarkdown);
+});
